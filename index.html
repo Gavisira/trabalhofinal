@@ -124,21 +124,19 @@
                 $("#form-especie")[0].reset();
             });
         
-            // Intercepta o click do botão Alterar
-            $("#btnUpdate").click(function () {
+           $("#btnUpdate").click(function () {
                 // Obtem os valores dos campos do formulário
                 let campoId = $("#inputId").val();
                 if (campoId == "") {
                     displayMessage("Selecione um especie para ser alterado.");
                     return;
                 }
-                let cE = $("#imputEspecie").val();
-                let imag = $("#inputImg").val();
-                let cr = $("#risco").val();
-                let cdata = $('#inputData').val();
-                let especie = { especie: cE, imagem: imag, situacao: cr, reino: cdata };
-        
-                updateEspecie(parseInt(campoId), especie);
+                let campoEspecie = $("#imputEspecie").val();
+                let campoImagem = $("#inputImg").val();
+                let campoRisco = $('#risco').val();
+                let campoReino = $('#inputData').val();
+                let animal = {especie: campoEspecie, imagem: campoImagem, situacao: campoRisco, reino: campoReino};
+                updateEspecie(parseInt(campoId), animal);
         
                 // Reexibe os especies
                 exibeEspecies();
