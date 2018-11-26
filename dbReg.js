@@ -72,7 +72,18 @@ function deleteEspecie(id) {
     db.data.splice(id-1, 1);
 
     displayMessage("Especie removida");
+    
+    reordenaId();
 
     // Atualiza os dados no Local Storage
     localStorage.setItem('db', JSON.stringify(db));
+}
+
+function reordenaId() {
+    obj = db.data;
+    for (i=0; i<obj.length; i++) {
+        if (i != (obj[i].id+1)) {
+            obj[i].id = i+1;
+        }
+    }
 }
