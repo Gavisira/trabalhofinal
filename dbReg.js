@@ -33,6 +33,7 @@ function displayMessage(msg) {
 }
 
 function insertEspecie(animal) {
+    reordenaId();
     // Calcula novo Id a partir do último código existente no array
     let novoId = db.data[db.data.length - 1].numero + 1;
     let novoEspecie = {
