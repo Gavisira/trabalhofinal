@@ -63,7 +63,7 @@ function updateEspecie(id, animal) {
 }
 
 function deleteEspecie(id) {    
-    db.data.splice(id, 1);
+    db.data.splice(id-1, 1);
     displayMessage("Especie removida");
     
     reordenaId();
