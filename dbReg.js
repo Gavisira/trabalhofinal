@@ -75,8 +75,8 @@ function deleteEspecie(id) {
 function reordenaId() {
     obj = db.data;
     for (i=0; i<obj.length; i++) {
-        if (i != (obj[i].id+1)) {
-            obj[i].id = i+1;
+        if (i != (obj[i].numero+1)) {
+            obj[i].numero = i+1;
         }
     }
 }
