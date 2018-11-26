@@ -45,7 +45,7 @@ function insertEspecie(animal) {
 
     // Insere o novo objeto no array
     db.data.push(novoEspecie);
-    displayMessage("Ispecie Inserida com sucesso");
+    displayMessage("Espécie Inserida com sucesso");
 
     // Atualiza os dados no Local Storage
     localStorage.setItem('db', JSON.stringify(db));
@@ -61,7 +61,7 @@ function updateEspecie(id, animal) {
         db.data[index].reino = animal.reino,
         db.data[index].situacao = animal.situacao,
 
-    displayMessage("especie alterado com sucesso");
+    displayMessage("Espécie alterado com sucesso");
 
     // Atualiza os dados no Local Storage
     localStorage.setItem('db', JSON.stringify(db));
