@@ -63,9 +63,7 @@ function updateEspecie(id, animal) {
 }
 
 function deleteEspecie(id) {    
-    // Filtra o array removendo o elemento com o id passado
-    db.data.splice(id-1, 1);
-
+    db.data.splice(id, 1);
     displayMessage("Especie removida");
     
     reordenaId();
