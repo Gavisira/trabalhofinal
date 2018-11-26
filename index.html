@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lab FakeDB</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+    img {
+        width: 60px;
+    }
+    </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="dbReg.js"></script>
+
+ 
+</head>
+
+<body onload="init()">
+    <h1>Especies</h1>
+    <div class="col-sm-12">
+    <div class="container"></div>
+            <div class="row">
+                    <div id="msg" class="col-sm-10 offset-sm-1 ">
+                    </div>
+                </div>
+        <form id="form-especie">
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <label for="inputId">Id</label>
+                    <input type="text" class="form-control" id="inputId" placeholder="ID" disabled>
+                </div>
+                <div class="col-sm-8">
+                    <label for="imputEspecie">Especie</label>
+                    <input type="text" class="form-control" id="imputEspecie" required placeholder="Informe a especie">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-7">
+                    <label for="risco">Situação de Extinção</label>
+                    <input type="text" class="form-control" id="risco" required placeholder="Informe a Situação">
+                </div>
+                <div class="col-sm-12">
+                    <label for="inputData">Reino</label>
+                    <input type="text" class="form-control" id="inputData" required placeholder="Reino do animal">
+                </div>
+                
+                <div class="col-sm-5">
+                        <label for="inputImg">Link da Imagem</label>
+                        <input type="text" class="form-control" id="inputImg" required placeholder="Insira link da Imagem">
+                    </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <small>Todos os Campos são obrigatórios</small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <input type="button" class="btn btn-success" id="btnInsert" value="Inserir">
+                    <input type="button" class="btn btn-warning" id="btnUpdate" value="Alterar">
+                    <input type="button" class="btn btn-danger" id="btnDelete" value="Excluir">
+                    <input type="button" class="btn btn-secondary" id="btnClear" value="Limpar">
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="col-sm-10" class="table-responsive">
+                <table id="grid-especies" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Imagem</th>
+                            <th scope="col">Id</th>
+                            <th scope="col">Especie</th>
+                            <th scope="col">Situação</th>
+                            <th scope="col">Reino</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-especies">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div></div>
+
+
+
+    <script>
+        function exibeEspecies() {
+            $("#table-especies").html("");
+
+            for (i = 0; i < db.data.length; i++) {
+                let animal = db.data[i];
+                $("#table-especies").append(`<tr><td scope="row"><img src='${animal.imagem}'></td><td>${animal.numero}</td><td>${animal.especie}</td><td>${animal.situacao}<td>${animal.reino}</td></tr>`);
+            }
+        }
+        
+        function init() {
+                $("#btnInsert").click(function () {
+        
+                // Obtem os valores dos campos do formulário
+                let cE = $("#imputEspecie").val();
+                let imag = $("#inputImg").val();
+                let cr = $('#risco').val();
+                let cdata = $('#inputData').val();
+                let animal = { especie: cE, imagem: imag, situacao: cr, reino: cdata };
+        
+                insertEspecie(animal);
+        
+                // Reexibe os especies
+                exibeEspecies();
+        
+                // Limpa o formulario
+                $("#form-especie")[0].reset();
+            });
+        
+            // Intercepta o click do botão Alterar
+            $("#btnUpdate").click(function () {
+                // Obtem os valores dos campos do formulário
+                let campoId = $("#inputId").val();
+                if (campoId == "") {
+                    displayMessage("Selecione um especie para ser alterado.");
+                    return;
+                }
+                let cE = $("#imputEspecie").val();
+                let imag = $("#inputImg").val();
+                let cr = $("#risco").val();
+                let cdata = $('#inputData').val();
+                let especie = { especie: cE, imagem: imag, situacao: cr, reino: cdata };
+        
+                updateEspecie(parseInt(campoId), especie);
+        
+                // Reexibe os especies
+                exibeEspecies();
+        
+                // Limpa o formulario
+                $("#form-especie")[0].reset();
+            });
+        
+            // Intercepta o click do botão Excluir
+            $("#btnDelete").click(function () {
+                let campoId = $("#inputId").val();
+                if (campoId == "") {
+                    displayMessage("Selecione um especie a ser excluída.");
+                    return;
+                }
+                deleteEspecie(parseInt(campoId));
+        
+                // Reexibe os especies
+                exibeEspecies();
+        
+                // Limpa o formulario
+                $("#form-especie")[0].reset();
+            });
+        
+            // Intercepta o click do botão Listar especies
+            $("#btnClear").click(function () {
+                $("#form-especie")[0].reset();
+            });
+        
+            // Oculta a mensagem de aviso após alguns segundos
+            $('#msg').bind("DOMSubtreeModified", function () {
+                window.setTimeout(function () {
+                    $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                        $(this).remove();
+                    });
+                }, 5000);
+            });
+        
+            // Preenche o formulário quando o usuario clicar em uma linha da tabela 
+            $("#grid-especies").on("click", "tr", function (e) {
+                let linhaespecie = this;
+                $("#inputId").val(linhaespecie.childNodes[1].firstChild.nodeValue);
+                $("#imputEspecie").val(linhaespecie.childNodes[2].firstChild.nodeValue);
+                $("#risco").val(linhaespecie.childNodes[3].firstChild.nodeValue);
+                $("#inputData").val(linhaespecie.childNodes[4].firstChild.nodeValue);
+                document.getElementById("input.img").innerHTML=`<input type="text" placeholder="Insira um novo link para alterar">`;
+            });
+        
+            exibeEspecies();
+        }
+        </script>
+</body>
+
+</html>
