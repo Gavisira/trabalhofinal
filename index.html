@@ -102,6 +102,11 @@
         
         function init() {
                 $("#btnInsert").click(function () {
+                    
+                    if (!$('#form-especie')[0].checkValidity()) {
+                    displayMessage("Preencha o formulário corretamente.");
+                    return;
+                }
         
                 // Obtem os valores dos campos do formulário
                 let cE = $("#imputEspecie").val();
