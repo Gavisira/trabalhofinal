@@ -52,15 +52,9 @@ function insertEspecie(animal) {
 }
 
 function updateEspecie(id, animal) {
-    // Localiza o indice do objeto a ser alterado no array a partir do seu ID
-    let index = db.data.map(obj => obj.id).indexOf(id);
-
-    // Altera os dados do objeto no array
-    db.data[index].especie = animal.especie,
-        db.data[index].imagem = animal.imagem,
-        db.data[index].reino = animal.reino,
-        db.data[index].situacao = animal.situacao,
-
+    deleteEspecie(id);
+    insertEspecie(animal);
+    reordenaId();
     displayMessage("Espécie alterado com sucesso");
 
     // Atualiza os dados no Local Storage
