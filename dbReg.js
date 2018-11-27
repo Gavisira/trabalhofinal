@@ -7,21 +7,27 @@ var dbReg = {
             "especie" : "Panthera leo",
             "reino" : "Mamifero",
             "situacao" : "Fora de Risco",
-            "info" : "Vive no continente africano, é carnivoro"
+            "info" : "Carnivoro",
+            "pd" : "Não possui predador",
+            "pais" : "Africa"
         },{
             "imagem" : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Schimpanse_Zoo_Leipzig.jpg/250px-Schimpanse_Zoo_Leipzig.jpg",
             "numero": 2,
             "especie" : "Pan",
             "reino" : "Mamifero",
             "situacao" : "Ameaçado",
-            "info" : "Vive no continente africano, é herbivoro"
+            "info" : "Herbivoro",
+            "pd" : "Não possui predador",
+            "pais" : "Africa"
         },{
             "imagem" : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/African_Bush_Elephant.jpg/200px-African_Bush_Elephant.jpg",
             "numero": 3,
             "especie" : "Elephantidae",
             "reino" : "Mamifero",
             "situacao" : "Fora de Risco",
-            "info" : "Vive no continente africano, é herbivoro"
+            "info" : "Herbivoro",
+            "pd" : "Não possui predador",
+            "pais" : "Africa"
         }
 ]
 }
@@ -40,11 +46,14 @@ function insertEspecie(animal) {
     // Calcula novo Id a partir do último código existente no array
     let novoId = db.data[db.data.length - 1].numero + 1;
     let novoEspecie = {
+        "imagem": animal.imagem,
         "numero": novoId,
         "especie": animal.especie,
-        "imagem": animal.imagem,
         "reino": animal.reino,
-        "situacao": animal.situacao
+        "situacao": animal.situacao,
+        "info": animal.info,
+        "pd": animal.pd1,
+        "pais": animal.pais
     };
 
     // Insere o novo objeto no array
