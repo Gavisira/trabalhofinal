@@ -7,18 +7,21 @@ var dbReg = {
             "especie" : "Panthera leo",
             "reino" : "Mamifero",
             "situacao" : "Fora de Risco",
+            "info" : "Vive no continente africano, é carnivoro"
         },{
             "imagem" : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Schimpanse_Zoo_Leipzig.jpg/250px-Schimpanse_Zoo_Leipzig.jpg",
             "numero": 2,
             "especie" : "Pan",
             "reino" : "Mamifero",
             "situacao" : "Ameaçado",
+            "info" : "Vive no continente africano, é herbivoro"
         },{
             "imagem" : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/African_Bush_Elephant.jpg/200px-African_Bush_Elephant.jpg",
             "numero": 3,
             "especie" : "Elephantidae",
             "reino" : "Mamifero",
             "situacao" : "Fora de Risco",
+            "info" : "Vive no continente africano, é herbivoro"
         }
 ]
 }
