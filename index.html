@@ -5,14 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Trabalho Final - Catalogi de Espécies</title>
+    <title>Trabalho Final - Catalogo de Espécies</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <style>
         img {
         width: 60px;
     }
+    p {
+    border-top: 3px solid #000;
+}
+
+#myModalImage {
+    border: 10px solid transparent;
+    padding: 5px;
+    -webkit-border-image: url(https://www.w3schools.com/cssref/border.png) 30% round; /* Safari 3.1-5 */
+    -o-border-image: url(https://www.w3schools.com/cssref/border.png) 30% round; /* Opera 11-12.1 */
+    border-image: url(https://www.w3schools.com/cssref/border.png) 30% round;
+}
     </style>
+    
 
 
 
@@ -33,8 +45,8 @@
                     <input type="text" class="form-control" id="inputId" placeholder="ID" disabled>
                 </div>
                 <div class="col-sm-8">
-                    <label for="imputEspecie">Especie</label>
-                    <input type="text" class="form-control" id="imputEspecie" required placeholder="Informe a especie">
+                    <label for="inputEspecie">Especie</label>
+                    <input type="text" class="form-control" id="inputEspecie" required placeholder="Informe a especie">
                 </div>
             </div>
             <div class="form-group row">
@@ -46,14 +58,22 @@
                     <label for="inputData">Reino</label>
                     <input type="text" class="form-control" id="inputData" required placeholder="Reino do animal">
                 </div>
+                <div class="col-sm-5">
+                    <label for="predator">Predadores</label>
+                    <input type="text" class="form-control" id="predator" required placeholder="Informe os predadores">
+                </div>
 
                 <div class="col-sm-5">
                     <label for="inputImg">Link da Imagem</label>
                     <input type="text" class="form-control" id="inputImg" required placeholder="Insira link da Imagem">
                 </div>
                 <div class="col-sm-5">
-                        <label for="inputImg">Informações adicionais</label>
-                        <input type="text" class="form-control" id="inputInfo" required placeholder="Informações Extras">
+                        <label for="inputInfo">Alimentação</label>
+                        <input type="text" class="form-control" id="inputInfo" required placeholder="Tipo de Alimentação">
+                    </div>
+                    <div class="col-sm-5">
+                        <label for="inputLocal">Pais</label>
+                        <input type="text" class="form-control" id="inputLocal" required placeholder="Continente/País de origem">
                     </div>
             </div>
             <div class="form-group row">
@@ -108,10 +128,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <img id="myModalImage" src="" style="width: 200px;"></img>
+                    <img id="myModalImage" src="" style="width: 200px;">
                     <p id="myModalSituacao"></p>
                     <p id="myModalReino"></p>
+                    <p id="myModalPredador"></p>
                     <p id="myModalInfo"></p>
+                    <p id="myModalLocal"></p>
+                    
                 </div>
             </div>
         </div>
@@ -134,32 +157,27 @@
                 $("#table-especies").append(`<tr><td scope="row"><img src='${animal.imagem}'></td><td id="${animal.numero}">${animal.numero}</td><td>${animal.especie}</td><td>${animal.situacao}<td>${animal.reino}</td></tr>`);
             }
         }
-
         function init() {
             $("#btnInsert").click(function () {
-
                 if (!$('#form-especie')[0].checkValidity()) {
                     displayMessage("Preencha o formulário corretamente.");
                     return;
                 }
-
                 // Obtem os valores dos campos do formulário
-                let cE = $("#imputEspecie").val();
-                let imag = $("#inputImg").val();
-                let cr = $('#risco').val();
-                let cdata = $('#inputData').val();
-                let infoAn = $('#inputInfo').val();
-                let animal = { especie: cE, imagem: imag, situacao: cr, reino: cdata, info: infoAn };
-
+                let campoEspecie = $('#inputEspecie').val();
+                let campoImagem = $('#inputImg').val();
+                let campoRisco = $('#risco').val();
+                let campoReino = $('#inputData').val();
+                let campoInfo = $('#inputInfo').val();
+                let campoPredador = $('#predator').val();
+                let campoPais = $('#inputLocal').val();
+                let animal = { especie: campoEspecie, imagem : campoImagem, situacao : campoRisco, reino : campoReino, info : campoInfo, pd1 : campoPredador, pais : campoPais };
                 insertEspecie(animal);
-
                 // Reexibe os especies
                 exibeEspecies();
-
                 // Limpa o formulario
                 $("#form-especie")[0].reset();
             });
-
             $("#btnUpdate").click(function () {
                 // Obtem os valores dos campos do formulário
                 let campoId = $("#inputId").val();
@@ -167,21 +185,20 @@
                     displayMessage("Selecione um especie para ser alterado.");
                     return;
                 }
-                let campoEspecie = $("#imputEspecie").val();
-                let campoImagem = $("#inputImg").val();
+                let campoPredador = $('#predator').val();
+                let campoEspecie = $('#inputEspecie').val();
+                let campoImagem = $('#inputImg').val();
                 let campoRisco = $('#risco').val();
                 let campoReino = $('#inputData').val();
                 let campoInfo = $('#inputInfo').val();
-                let animal = { especie: campoEspecie, imagem: campoImagem, situacao: campoRisco, reino: campoReino, info: campoInfo };
+                let campoPais = $('#inputLocal').val();
+                let animal = { especie: campoEspecie, imagem: campoImagem, situacao: campoRisco, reino: campoReino, info: campoInfo, pd1 : campoPredador, pais : campoPais };
                 updateEspecie(parseInt(campoId), animal);
-
                 // Reexibe os especies
                 exibeEspecies();
-
                 // Limpa o formulario
                 $("#form-especie")[0].reset();
             });
-
             // Intercepta o click do botão Excluir
             $("#btnDelete").click(function () {
                 let campoId = $("#inputId").val();
@@ -190,19 +207,15 @@
                     return;
                 }
                 deleteEspecie(parseInt(campoId));
-
                 // Reexibe os especies
                 exibeEspecies();
-
                 // Limpa o formulario
                 $("#form-especie")[0].reset();
             });
-
             // Intercepta o click do botão Listar especies
             $("#btnClear").click(function () {
                 $("#form-especie")[0].reset();
             });
-
             // Oculta a mensagem de aviso após alguns segundos
             $('#msg').bind("DOMSubtreeModified", function () {
                 window.setTimeout(function () {
@@ -211,7 +224,6 @@
                     });
                 }, 5000);
             });
-
             // Preenche o formulário quando o usuario clicar em uma linha da tabela 
             $("#grid-especies").on("click", "tr", function (e) {
                 let linhaespecie = this;
@@ -220,11 +232,12 @@
                 $("#myModalSituacao").text(linhaespecie.childNodes[3].firstChild.nodeValue);
                 $("#myModalImage")[0].src = linhaespecie.childNodes[0].firstChild.currentSrc;
                 $("#myModalReino").text(linhaespecie.childNodes[4].firstChild.nodeValue);
-                $("#myModalInfo").text(db.data[e.target.id-1].info);
+                document.getElementById("myModalInfo").innerHTML=db.data[e.target.id-1].info;
+                $("#myModalLocal").text(db.data[e.target.id-1].pais);
+                document.getElementById("myModalPredador").innerHTML=db.data[e.target.id-1].pd;
                 $('#myModal').modal('toggle');
                 $('#myModal').modal('show');
             });
-
             exibeEspecies();
         }
     </script>
